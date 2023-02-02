@@ -1,0 +1,110 @@
+@page "/restaurants/{Id:guid}/edit"
+@page "/restaurants/new"
+@namespace FoodDelivery.Web.App.Pages
+@using FoodDelivery.Web.App.Resources.Texts
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<RestaurantEditPageResources> RestaurantEditPageLocalizer
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/restaurants/">Restaurants</a></li>
+        <li class="breadcrumb-item"><a href="/restaurants/@Data.Id">@Data.Id</a></li>
+        <li class="breadcrumb-item active" aria-current="page">eidt</li>
+    </ol>
+</nav>
+
+<h1>
+    @(Id != Guid.Empty ? RestaurantEditPageLocalizer["Restaurant_EditRestaurant"] + $" {Data.Name}" : RestaurantEditPageLocalizer["Restaurant_NewRestaurant"])
+</h1>
+
+<EditForm Model="@Data" OnValidSubmit="@Save">
+    <DataAnnotationsValidator />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="bg-warning rounded overflow-hidden h-100 d-flex">
+                @if (!String.IsNullOrEmpty(Data.Logo))
+                {
+                    <img class="card-img-top" src="@Data.Logo" alt="Card image cap">
+                }
+                else
+                {
+                    <img class="card-img-top" src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns=" alt="Card image cap">
+                }
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="w-100 font-weight-bold">
+                    @RestaurantEditPageLocalizer["Restaurant_Name"]
+                    <InputText @bind-Value="@Data.Name" class="form-control"/>
+                    <small class="form-text text-danger">
+                        <ValidationMessage For="@(() => Data.Name)"/>
+                    </small>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="w-100 font-weight-bold">
+                    @RestaurantEditPageLocalizer["Restaurant_Description"]
+                    <InputText @bind-Value="@Data.Description" class="form-control" />
+                    <small class="form-text text-danger">
+                        <ValidationMessage For="@(() => Data.Description)" />
+                    </small>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="w-100 font-weight-bold">
+                    @RestaurantEditPageLocalizer["Restaurant_ImageUrl"]
+                    <InputText @bind-Value="@Data.Logo" class="form-control" />
+                    <small class="form-text text-danger">
+                        <ValidationMessage For="@(() => Data.Logo)" />
+                    </small>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="w-100 font-weight-bold">
+                    @RestaurantEditPageLocalizer["Restaurant_Address"]
+                    <InputText @bind-Value="@Data.Address" class="form-control" />
+                    <small class="form-text text-danger">
+                        <ValidationMessage For="@(() => Data.Address)" />
+                    </small>
+                </label>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="w-100 font-weight-bold">
+                            @RestaurantEditPageLocalizer["Restaurant_Latitude"]
+                            <InputNumber @bind-Value="@Data.Latitude" class="form-control" />
+                            <small class="form-text text-danger">
+                                <ValidationMessage For="@(() => Data.Latitude)" />
+                            </small>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="w-100 font-weight-bold">
+                            @RestaurantEditPageLocalizer["Restaurant_Longitude"]
+                            <InputNumber @bind-Value="@Data.Longitude" class="form-control" />
+                            <small class="form-text text-danger">
+                                <ValidationMessage For="@(() => Data.Longitude)" />
+                            </small>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="d-flex justify-content-end mt-2 mb-2">
+        <button type="submit" class="btn btn-success mr-2">
+            @RestaurantEditPageLocalizer["Restaurant_Save"]
+        </button>
+        @if (Id != Guid.Empty)
+        {
+            <button class="btn btn-danger" @onclick="@Delete">@RestaurantEditPageLocalizer["Restaurant_Delete"]</button>
+        }
+    </div>
+
+</EditForm>

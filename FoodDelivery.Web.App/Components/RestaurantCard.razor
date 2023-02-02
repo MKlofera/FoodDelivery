@@ -1,0 +1,17 @@
+﻿@namespace FoodDelivery.Web.App
+
+<a href="/restaurants/@Restaurant.Id" class="m-1 text-decoration-none d-block">
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-3 col-lg-2 col-xl-2">
+                <img srcset="@Restaurant.Logo, https://nagrannar.is/images/restaurant-placeholder.png"
+                     class="restaurant-card-image img-fluid rounded-start" alt="logo of @Restaurant.Name">
+            </div>
+            <div class="col-8">
+                <div class="card-body">
+                    <h5 class="card-title">@Restaurant.Name</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>

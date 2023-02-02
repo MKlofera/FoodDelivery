@@ -1,0 +1,82 @@
+@page "/restaurants/{Id:guid}"
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.Extensions.Localization
+@using FoodDelivery.Web.App.Resources
+@inject IStringLocalizer<RestaurantDetailPageResources> PageLocalizer
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject IJSRuntime JsRuntime
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/restaurants/">Restaurants</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Restaurant.Name</li>
+    </ol>
+</nav>
+
+@* ---------------------------- RESTAURANT BASIC INFO ----------------------------*@
+<section class="RestaurantDetail_BasicInfo">
+    <div class="d-flex justify-content-between">
+        <h1>@Restaurant.Name</h1>
+        <div>
+            <a href="/restaurants/@Id/edit" class="btn btn-warning">@PageLocalizer["EditRestaurant"]</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+            @if (@Restaurant.Logo == null)
+            {
+                <img class="img-fluid" src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns=" />
+            }
+            else
+            {
+                <img class="img-fluid" src=@Restaurant.Logo />
+            }
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+            <h5>@PageLocalizer["SalesTitle"]</h5>
+            <p>@RestaurantSales</p>
+            <h5>@PageLocalizer["AddressTitle"]</h5>
+            <p>@Restaurant.Address</p>
+            <small>@PageLocalizer["Latitude"]: @Restaurant.Latitude</small>
+            <small>@PageLocalizer["Longitude"]: @Restaurant.Longitude</small>
+            <h5 class="mt-3">@PageLocalizer["DescriptionTitle"]</h5>
+            <p>@Restaurant.Description</p>
+        </div>
+    </div>
+</section>
+
+@* ---------------------------- RESTAURANT FOOD LIST ----------------------------*@
+<section class="RestaurantDetail_Foods">
+    <div class="d-flex justify-content-between">
+        <h4 class="mt-4">@PageLocalizer["FoodTitle"]</h4>
+        @* <a href="/restaurants/@Restaurant.Id/foods" class="btn btn-primary mt-auto">@PageLocalizer["ShowAllFoods"]</a> *@
+    </div>
+    <FoodListComponent foods=@FoodList></FoodListComponent>
+</section>
+@* ---------------------------- RESTAURANT ORDER TABLE ----------------------------*@
+<section class="RestaurantDetail_Orders">
+    <h4 class="mt-4">@PageLocalizer["OrderTitle"]</h4>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">@PageLocalizer["OrderName"]</th>
+                    <th scope="col">@PageLocalizer["OrderAddress"]</th>
+                    <th scope="col">@PageLocalizer["OrderCreatedDate"]</th>
+                    <th scope="col">@PageLocalizer["OrderState"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in OrderList)
+                {
+                    <tr>
+                        <td><a href="/orders/@order.Id">@order.Name</a></td>
+                        <td><a href="/orders/@order.Id">@order.Address</a></td>
+                        <td><a href="/orders/@order.Id">@order.CreatedDate</a></td>
+                        <td><a href="/orders/@order.Id">@order.OrderState</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

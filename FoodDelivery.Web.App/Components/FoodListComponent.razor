@@ -1,0 +1,60 @@
+﻿@namespace FoodDelivery.Web.App
+@using FoodDelivery.Web.App.Resources;
+@using Microsoft.Extensions.Localization;
+@using FoodDelivery.Web.App.Extensions
+@inject IStringLocalizer<FoodListComponentResources> PageLocalizer
+
+
+<div class="filters">
+    <div class="input-group mb-3">
+        <label class="input-group-text bg-light" for="orderingSelect">
+            @PageLocalizer["OrderBy_Label"]
+        </label>
+        <InputSelect @bind-Value="selectedOrderingKey" id="orderingSelect" class="form-select">
+            <option value="identityOrder">@PageLocalizer["OrderBy_Option_Default"]</option>
+            <option value="orderByNameAscending">@PageLocalizer["OrderBy_Option_OrderByNameAsc"]</option>
+            <option value="orderByNameDescending">@PageLocalizer["OrderBy_Option_OrderByNameDesc"]</option>
+            <option value="orderByPriceAscending">@PageLocalizer["OrderBy_Option_OrderByPriceAsc"]</option>
+            <option value="orderByPriceDescending">@PageLocalizer["OrderBy_Option_OrderByPriceDesc"]</option>
+        </InputSelect>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-text bg-light">
+            @PageLocalizer["Allergens_FilterLabel"]
+        </div>
+        @foreach (var (allergen, allergenFilter) in allergenFilters)
+        {
+            <label class="input-group-text bg-light">
+                <input class="form-check-input mt-0 me-1" type="checkbox" @bind="@allergenFilter.Display"
+                   aria-label="Include foods with allergen @allergen">
+                @allergen.GetReadableName()
+            </label>
+        }
+    </div>
+</div>
+
+@if (foods?.Count > 0)
+{
+    @foreach (var food in GetDisplayedFoods())
+    {
+        <div class="d-flex">
+            <FoodCard Food="food" />
+            <AddToCartButton Food="@food" />
+        </div>
+    }
+}
+else if (foods?.Count == 0)
+{
+    <div class="alert alert-secondary" role="alert">
+        @PageLocalizer["NoFoods"]
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}

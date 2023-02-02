@@ -1,0 +1,32 @@
+﻿@namespace FoodDelivery.Web.App
+@using FoodDelivery.Common.Attributes;
+@using FoodDelivery.Web.App.Extensions;
+
+<a href="/foods/@Food.Id" class="m-1 text-decoration-none d-block" style="max-width: 540px;">
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-3 col-lg-2 col-xl-2">
+                <img srcset="@Food.Photo, https://alcaratello.com/wp-content/uploads/2021/03/meal-placeholder.jpg"
+                     class="food-card-image img-fluid rounded-start" alt="photo of @Food.Name">
+            </div>
+            <div class="col-7">
+                <div class="card-body">
+                    <h5 class="card-title">@Food.Name</h5>
+                    <small class="card-text text-muted">
+                        @foreach (var allergen in Food.Allergens)
+                        {
+                            <span class="badge bg-warning text-dark me-1">
+                                @allergen.GetReadableName()
+                            </span>
+                        }
+                    </small>
+                </div>
+            </div>
+			<div class="col-3">
+                <div class="card-body">
+                    <p class="card-text text-muted">@Food.Price CZK</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>

@@ -1,0 +1,30 @@
+@page "/restaurants"
+@using FoodDelivery.Web.App.Resources;
+@using Microsoft.Extensions.Localization;
+@inject IStringLocalizer<RestaurantListPageResources> PageLocalizer
+
+<div class="d-flex">
+    <h1>@PageLocalizer["Restaurants_Title"]</h1>
+
+    <a href="/restaurants/new" class="btn btn-primary ms-auto mt-auto">@PageLocalizer["AddRestaurant"]</a>
+</div>
+
+@if (restaurants is { Count: > 0 })
+{
+    @foreach (var restaurant in restaurants)
+    {
+        <RestaurantCard Restaurant="restaurant" />
+    }
+}
+else if (restaurants?.Count == 0)
+{
+    <p class="text-muted">@PageLocalizer["NoRestaurants"]</p>
+}
+else
+{
+    <div class="text-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}

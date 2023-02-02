@@ -1,0 +1,35 @@
+@page "/sales"
+@using FoodDelivery.Web.App;
+@using FoodDelivery.Common.Models.Models.Restaurant;
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using FoodDelivery.Web.App.Resources;
+@using Microsoft.Extensions.Localization;
+@inject IStringLocalizer<RestaurantSalesPageResources> PageLocalizer
+
+<h1>@PageLocalizer["Sales_Title"]</h1>
+
+@if (sales != null)
+{
+    <QuickGrid Items="@sales.AsQueryable()" Class="table">
+        <TemplateColumn Title="@PageLocalizer["Restaurant_Column"]" Sortable="true" SortBy="@alphabeticalSort" Context="row">
+            <div class="d-flex gap-2 align-items-center">
+                <img srcset="@row.Restaurant.Logo, https://nagrannar.is/images/restaurant-placeholder.png"
+                    style="max-height:2em" alt="logo of @row.Restaurant.Name">
+                <span>
+                    <a href="/restaurants/@row.Restaurant.Id">@row.Restaurant.Name</a>
+                </span>
+            </div>
+        </TemplateColumn>
+        <PropertyColumn Title="@PageLocalizer["Sales_Column"]" Sortable="true" IsDefaultSort="SortDirection.Descending"
+            Property="@(s => s.Sales)" Format="0' CZK'" />
+    </QuickGrid>
+}
+else
+{
+    <div class="text-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}

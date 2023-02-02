@@ -1,0 +1,50 @@
+@page "/search"
+@using Microsoft.AspNetCore.Components.Forms
+@using FoodDelivery.Web.App.Resources;
+@using Microsoft.Extensions.Localization;
+@inject IStringLocalizer<SearchPageResources> PageLocalizer
+
+
+@* ----------------------------------- SEARCH INPUT ----------------------------------- *@
+<h1>@PageLocalizer["Search_Title"]</h1>
+<p>@PageLocalizer["Search_PageDescription"]</p>
+
+<div class="input-group input-group-lg mb-3">
+    <span class="input-group-text" id="searchQueryLabel">
+        @PageLocalizer["Search_InputLabel"]
+    </span>
+    <input type="search" class="form-control" aria-describedby="searchQueryLabel"
+        @onchange="async e => await StartSearch(e?.Value as string)">
+</div>
+
+@* ----------------------------------- SEARCH RESULT ----------------------------------- *@
+@if (searchResults is null)
+{
+    @if (IsLoading)
+    {
+        <p>@PageLocalizer["Searching_LoadingMessage"] <em>@searchQuery</em>...</p>
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+}
+else if (searchResults is { Foods: { Count: 0 }, Restaurants: { Count: 0 } })
+{
+    <p>@PageLocalizer["NoResultsFoundFor"] <em>@searchQuery</em>.</p>
+}
+else
+{
+    <p>@PageLocalizer["FoundRestaurants_Label"]</p>
+    foreach (var restaurant in searchResults.Restaurants)
+    {
+        <RestaurantCard Restaurant="restaurant" />
+    }
+
+    <p>@PageLocalizer["FoundFoods_Label"]</p>
+    foreach (var food in searchResults.Foods)
+    {
+        <FoodCard Food="food" />
+    }
+}

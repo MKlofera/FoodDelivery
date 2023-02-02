@@ -1,0 +1,60 @@
+﻿@page "/orders/{Id:guid}"
+@using Microsoft.Extensions.Localization
+@using FoodDelivery.Web.App.Resources
+@using FoodDelivery.Common.Enums
+@inject IStringLocalizer<OrderDetailPageResources> PageLocalizer
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/restaurants/">Restaurants</a></li>
+        <li class="breadcrumb-item"><a href="/restaurants/@Order.RestaurantId">@Order.RestaurantName</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Id</li>
+    </ol>
+</nav>
+
+@* --------------------------------------- ORDERS TITLE --------------------------------------- *@
+<section class="OrderDetailPage_Title">
+    <div class="d-flex justify-content-between">
+        <h1>@PageLocalizer["OrderTitle"]</h1>
+        <a href="/orders/@Id/edit" class="btn btn-warning">@PageLocalizer["EditBtn"]</a>
+    </div>
+</section>
+
+@* --------------------------------------- ORDERS BASIC INFO --------------------------------------- *@
+<section class="OrderDetailPage_BasicInfo">
+    <p><strong>@PageLocalizer["Name"]:</strong> @Order.Name</p>
+    <p><strong>@PageLocalizer["Address"]:</strong> @Order.Address</p>
+    <p><strong>@PageLocalizer["CreatedDate"]:</strong> @Order.CreatedDate</p>
+    <p><strong>@PageLocalizer["State"]:</strong> @Order.OrderState</p>
+    @if (Order.OrderState == OrderState.Delivered)
+    {
+        <p><strong>@PageLocalizer["DeliverDate"]:</strong> @Order.DeliveryTime</p>
+    }
+    else
+    {
+        <p><strong>@PageLocalizer["DeliverDate"]:</strong> ---- </p>
+    }
+    <p><strong>@PageLocalizer["Description"]:</strong> @Order.Description</p>
+    <p><strong>@PageLocalizer["TotalPrice"]:</strong> $@GetTotalPrice()</p>
+</section>
+
+@* --------------------------------------- ORDERS FOODS --------------------------------------- *@
+<section class="OrderDetailPage_Foods">
+    <h5>@PageLocalizer["FoodTitle"]</h5>
+    <div class="row justify-content-center mx-4">
+        <ul>
+            @foreach (var foodOrder in Order.FoodOrderNotes)
+            {
+                <li>
+                    <a href="foods/@foodOrder.FoodId">@foodOrder.FoodName</a> <span class="font-weight-bold">@foodOrder.FoodQuantity</span><span>x - </span> <span>$@(foodOrder.FoodPrice * foodOrder.FoodQuantity)</span>
+                    @if (foodOrder.Note != null)
+                    {
+                        <ul>
+                            <li>@foodOrder.Note</li>
+                        </ul>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+</section>

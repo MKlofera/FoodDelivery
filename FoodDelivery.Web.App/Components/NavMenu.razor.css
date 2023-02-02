@@ -1,0 +1,4 @@
+﻿::deep .navbar-nav .nav-link.active {
+    border-bottom: 2px solid var(--bs-primary);
+    font-weight: 600;
+}

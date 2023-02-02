@@ -1,0 +1,86 @@
+@page "/orders/{Id:guid}/edit"
+@using Microsoft.Extensions.Localization
+@using FoodDelivery.Web.App.Resources.Texts
+@using FoodDelivery.Common.Enums
+@using FoodDelivery.Web.App.Extensions;
+@inject IStringLocalizer<OrderEditPageResources> OrderPageLocalizer
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/restaurants/">Restaurants</a></li>
+        <li class="breadcrumb-item"><a href="/restaurants/@Data.RestaurantId">@Data.RestaurantName</a></li>
+        <li class="breadcrumb-item"><a href="/orders/@Data.Id">@Data.Id</a></li>
+        <li class="breadcrumb-item active" aria-current="page">edit</li>
+    </ol>
+</nav>
+
+<h1>
+	@(OrderPageLocalizer["Order_Edit"])
+</h1>
+
+<EditForm Model="@Data" OnValidSubmit="@Save">
+    <DataAnnotationsValidator />
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="w-100 font-weight-bold">
+                    @OrderPageLocalizer["Order_Name"]
+                    <InputText @bind-Value="@Data.Name" class="form-control" />
+                    <small class="form-text text-danger">
+                        <ValidationMessage For="@(() => Data.Name)" />
+                    </small>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="w-100 font-weight-bold">
+                    @OrderPageLocalizer["Order_Address"]
+                    <InputTextArea @bind-Value="@Data.Address" class="form-control" />
+                    <small class="form-text text-danger">
+                        <ValidationMessage For="@(() => Data.Address)" />
+                    </small>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="w-100 font-weight-bold">
+                    @OrderPageLocalizer["Order_Description"]
+                    <InputTextArea @bind-Value="@Data.Description" class="form-control" />
+                    <small class="form-text text-danger">
+                        <ValidationMessage For="@(() => Data.Description)" />
+                    </small>
+                </label>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="w-100 font-weight-bold">
+                        @OrderPageLocalizer["Order_State"]
+                        <InputSelect @bind-Value="Data.OrderState" class="form-select">
+                            @foreach (var order in Enum.GetValues<OrderState>())
+                            {
+                                if (order != OrderState.Undefined)
+                                {
+                                    <option value="@order">@order.GetReadableName()</option>
+                                }
+                            }
+                        </InputSelect>
+                        <small class="form-text text-danger">
+                            <ValidationMessage For="@(() => Data.OrderState)" />
+                        </small>
+                    </label>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-2 mb-2">
+                <button type="submit" class="btn btn-success mr-2">
+                    @OrderPageLocalizer["Order_Save"]
+                    </button>
+                    @if (Id != Guid.Empty)
+                    {
+                        <button class="btn btn-danger" @onclick="@Delete">@OrderPageLocalizer["Order_Delete"]</button>
+                    }
+            </div>
+        </div>
+
+
+    </div>
+</EditForm>
+

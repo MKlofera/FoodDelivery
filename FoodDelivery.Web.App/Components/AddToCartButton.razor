@@ -1,0 +1,22 @@
+@namespace FoodDelivery.Web.App
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.Extensions.Localization
+@using FoodDelivery.Web.App.Resources
+@inject IStringLocalizer<RestaurantDetailPageResources> PageLocalizer
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject IJSRuntime JsRuntime
+
+
+<div class="form-group m-auto">
+    <label>@PageLocalizer["OrderingFoodNote"]</label>
+    <textarea @bind="@CartItem.Note" class="form-control" placeholder="@PageLocalizer["OrderingFoodNotePlaceholder"]" />
+</div>
+<div class="form-group m-auto">
+    <label>@PageLocalizer["NumberOfOrderingFood"]</label>
+    <input type="number" @bind="CartItem.Quantity" class="form-control" />
+</div>
+
+<button type="button" class="btn btn-primary m-auto"
+        @onclick:preventDefault="true" @onclick="(() => { SetInfoAboutOrderingFood(Food); })">
+    @PageLocalizer["AddToCart"]
+</button>

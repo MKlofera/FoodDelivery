@@ -1,0 +1,50 @@
+﻿@page "/shoppingCart"
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.Extensions.Localization
+@using FoodDelivery.Web.App.Resources
+@inject IStringLocalizer<ShoppingCartPageResources> PageLocalizer
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+
+
+@* ----------------------------------- SHOPPING CART TITLE ----------------------------------- *@
+<section class="PageTitle">
+    <div class="d-flex justify-content-between">
+        <h1>@PageLocalizer["CartTitle"]</h1>
+        <button class="btn btn-danger" @onclick="() => {DeleteWholeCart();}">@PageLocalizer["DeleteWholeCart"]</button>
+    </div>
+</section>
+
+
+@* ----------------------------------- SHOPPING CART CONTENT ----------------------------------- *@
+<section class="ShoppingCartContent mt-4">
+    @if (CartItems is not null) {
+        foreach (var order in CartItems)
+        {
+            <div class="d-flex justify-content-between">
+                <h6><a href="/foods/@order.FoodId">@order.FoodName</a> - @order.Quantity x</h6>
+                <button class="btn btn-danger" @onclick="() => {DeleteItem(order); }">@PageLocalizer["DeleteItemCart"]</button>
+            </div>
+            <p>@order.Note</p>
+        }
+    }
+</section>
+
+@* ----------------------------------- SHOPPING CART FORM ----------------------------------- *@
+<section class="ShoppingCartPage_Form row">
+    <EditForm Model="NewOrder">
+        <div class="form-group">
+            <label>@PageLocalizer["InputName"]</label>
+            <InputTextArea @bind-Value="@NewOrder.Name" class="form-control" placeholder="@PageLocalizer["InputNamePlaceholder"]" />
+        </div>
+        <div class="form-group">
+            <label>@PageLocalizer["InputAddress"]</label>
+            <InputTextArea @bind-Value="@NewOrder.Address" class="form-control" placeholder="@PageLocalizer["InputAddressPlaceholder"]" />
+        </div>
+        <div class="form-group">
+            <label>@PageLocalizer["InputDescription"]</label>
+            <InputTextArea @bind-Value="@NewOrder.Description" class="form-control" placeholder="@PageLocalizer["InputDescriptionPlaceholder"]" />
+        </div>
+    </EditForm>
+    <button class="btn btn-success" @onclick="() => {CreateOrder();}">@PageLocalizer["CreateOrder"]</button>
+</section>

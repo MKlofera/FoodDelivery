@@ -1,0 +1,20 @@
+﻿@namespace FoodDelivery.Web.App
+@using FoodDelivery.Common.Enums;
+@using FoodDelivery.Web.App.Resources;
+@using Microsoft.Extensions.Localization;
+@inject IStringLocalizer<OrderListPageResources> PageLocalizer
+
+<a href="/orders/@Order.Id" class="m-1 text-decoration-none d-block" style="max-width: 540px;">
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title">
+				@Order.Name
+			</h5>
+			<p class="card-text">@Order.Address</p>
+		</div>
+		<div class="card-footer text-muted">
+			@(Order.OrderState == OrderState.Delivered ? "✅" : "⌛")
+			@PageLocalizer["OrderedAt_CardLabel"] @Order.CreatedDate
+		</div>
+	</div>
+</a>

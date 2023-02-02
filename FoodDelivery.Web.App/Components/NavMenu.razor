@@ -1,0 +1,58 @@
+﻿@namespace FoodDelivery.Web.App
+@using FoodDelivery.Web.App.Shared
+@using Microsoft.Extensions.Localization
+@using FoodDelivery.Web.App.Resources
+@inject IStringLocalizer<NavMenuComponentResources> PageLocalizer
+
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Food Delivery</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <NavLink href="" Match="NavLinkMatch.All"
+                             class="nav-link" ActiveClass="active">
+                        @PageLocalizer["Home"]
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink href="/restaurants" Match="NavLinkMatch.All"
+                             class="nav-link" ActiveClass="active">
+                        @PageLocalizer["Restaurants"]
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink href="/orders" Match="NavLinkMatch.All"
+                             class="nav-link" ActiveClass="active">
+                        @PageLocalizer["Orders"]
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink href="/sales" Match="NavLinkMatch.All"
+                            class="nav-link" ActiveClass="active">
+                        @PageLocalizer["Sales"]
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink href="/search" Match="NavLinkMatch.All"
+                             class="nav-link" ActiveClass="active">
+                        @PageLocalizer["Search"]
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink href="/shoppingCart" Match="NavLinkMatch.All"
+                             class="nav-link" ActiveClass="active">
+                        @PageLocalizer["ShoppingCart"]
+                    </NavLink>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <CultureSelector />
+</nav>
