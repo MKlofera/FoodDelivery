@@ -11,5 +11,5 @@ public interface IOrderFacade : IAppFacade
     Guid Create(OrderDetailModel model);
     Guid? Update(OrderDetailModel model);
     void Delete(Guid id);
-    List<OrderListModel> RestaurantOrders(Guid restaurantId);
+    List<OrderListModel>? RestaurantOrders(Guid restaurantId);
 }

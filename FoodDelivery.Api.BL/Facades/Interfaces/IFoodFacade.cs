@@ -7,7 +7,7 @@ public interface IFoodFacade : IAppFacade
 {
     List<FoodListModel> GetAll();
     FoodDetailModel? GetById(Guid id);
-    IList<FoodListModel> RestaurantFoods(Guid restaurantId);
+    IList<FoodListModel>? RestaurantFoods(Guid restaurantId);
     Guid CreateOrUpdate(FoodDetailModel model);
     Guid Create(FoodDetailModel model);
     Guid? Update(FoodDetailModel model);
