@@ -1,12 +1,17 @@
 ﻿using FoodDelivery.Api.DAL.Common.Entities;
+using FoodDelivery.Api.DAL.Common.Entities.Auth;
 using FoodDelivery.Api.DAL.Common.Seeds;
 using FoodDelivery.Common.Enums;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace FoodDelivery.Api.DAL.EF;
 
-public class FoodDeliveryDbContext : DbContext
+public class FoodDeliveryDbContext : IdentityDbContext<AppUserEntity, AppRoleEntity, 
+    Guid, AppUserClaimEntity, AppUserRoleEntity, AppUserLoginEntity, 
+    AppRoleClaimEntity, AppUserTokenEntity>
 {
     public DbSet<OrderEntity> Orders { get; set; } = null!;
     public DbSet<FoodEntity> Foods { get; set; } = null!;
@@ -20,6 +25,14 @@ public class FoodDeliveryDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<AppRoleClaimEntity>().ToTable("AppRoleClaims");
+        modelBuilder.Entity<AppRoleEntity>().ToTable("AppRoles");
+        modelBuilder.Entity<AppUserClaimEntity>().ToTable("AppUserClaims");
+        modelBuilder.Entity<AppUserEntity>().ToTable("AppUsers");
+        modelBuilder.Entity<AppUserLoginEntity>().ToTable("AppUserLogins");
+        modelBuilder.Entity<AppUserRoleEntity>().ToTable("AppUserRoles");
+        modelBuilder.Entity<AppUserTokenEntity>().ToTable("AppUserTokens");
 
         modelBuilder.Entity<OrderEntity>()
             .HasMany(orderEntity => orderEntity.FoodOrderNotes)

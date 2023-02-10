@@ -2,6 +2,7 @@
 using FoodDelivery.Common.Models.Models.Food;
 using FoodDelivery.Common.Models.Models.Order;
 using FoodDelivery.Common.Models.Models.Restaurant;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,7 @@ public class RestaurantController : ControllerBase
     }
     
     [HttpGet("")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<ICollection<RestaurantListModel>> GetAll()

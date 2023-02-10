@@ -15,9 +15,10 @@ using FoodDelivery.Common.Models.Models;
 using FoodDelivery.Common.Models.Models.Food;
 using FoodDelivery.Common.Models.Models.Order;
 using FoodDelivery.Common.Models.Models.Restaurant;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +38,16 @@ builder.Services.AddInstaller<ApiDALEFInstaller>(connectionString);
 builder.Services.AddInstaller<ApiBLInstaller>();
 builder.Services.AddAutoMapper(typeof(EntityBase), typeof(ApiBLInstaller));
 builder.Services.AddControllers();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
+        options =>
+        {
+            options.Authority = builder.Configuration["IdentityServerUrl"];
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false
+            };
+        });
 
 var app = builder.Build();
 
@@ -52,6 +63,9 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 app.MapControllers();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseSwagger();
 app.UseSwaggerUI();
