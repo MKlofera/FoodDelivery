@@ -9,26 +9,10 @@ namespace FoodDelivery.Web.BL.Installers
     {
         public void Install(IServiceCollection serviceCollection, string? apiBaseUrl)
         {
-            serviceCollection.AddTransient<IRestaurantApiClient, RestaurantApiClient>(provider =>
-            {
-                var client = CreateApiHttpClient(apiBaseUrl);
-                return new RestaurantApiClient(client, apiBaseUrl);
-            });
-            serviceCollection.AddTransient<IOrderApiClient, OrderApiClient>(provider =>
-            {
-                var client = CreateApiHttpClient(apiBaseUrl);
-                return new OrderApiClient(client, apiBaseUrl);
-            });
-            serviceCollection.AddTransient<IFoodApiClient, FoodApiClient>(provider =>
-            {
-                var client = CreateApiHttpClient(apiBaseUrl);
-                return new FoodApiClient(client, apiBaseUrl);
-            });
-            serviceCollection.AddTransient<ISearchApiClient, SearchApiClient>(provider =>
-            {
-                var client = CreateApiHttpClient(apiBaseUrl);
-                return new SearchApiClient(client, apiBaseUrl);
-            });
+            serviceCollection.AddTransient<IRestaurantApiClient, RestaurantApiClient>();
+            serviceCollection.AddTransient<IOrderApiClient, OrderApiClient>();
+            serviceCollection.AddTransient<IFoodApiClient, FoodApiClient>();
+            serviceCollection.AddTransient<ISearchApiClient, SearchApiClient>();
 
             serviceCollection.Scan(selector =>
                 selector.FromAssemblyOf<WebBLInstaller>()
@@ -37,12 +21,5 @@ namespace FoodDelivery.Web.BL.Installers
                     .WithTransientLifetime());
         }
 
-
-        public HttpClient CreateApiHttpClient(string? apiBaseUrl)
-        {
-            var client = new HttpClient() { BaseAddress = new Uri(apiBaseUrl) };
-            client.BaseAddress = new Uri(apiBaseUrl);
-            return client;
-        }
     }
 }

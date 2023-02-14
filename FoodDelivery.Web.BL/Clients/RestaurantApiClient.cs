@@ -2,8 +2,10 @@
 
 public partial class RestaurantApiClient
 {
-    public RestaurantApiClient(HttpClient httpClient, string? baseUrl) : this(baseUrl, httpClient)
+
+    public RestaurantApiClient(AuthenticatedHttpClient authenticatedHttpClient)
     {
-        BaseUrl = baseUrl;
+        _httpClient = authenticatedHttpClient.HttpClient;
+        _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings);
     }
 }

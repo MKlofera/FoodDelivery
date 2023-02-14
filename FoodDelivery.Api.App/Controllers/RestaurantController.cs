@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 namespace FoodDelivery.Api.App.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/restaurants")]
 public class RestaurantController : ControllerBase
 {
@@ -26,7 +27,6 @@ public class RestaurantController : ControllerBase
     }
     
     [HttpGet("")]
-    [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<ICollection<RestaurantListModel>> GetAll()

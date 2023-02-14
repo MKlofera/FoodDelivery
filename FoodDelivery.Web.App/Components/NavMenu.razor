@@ -2,6 +2,7 @@
 @using FoodDelivery.Web.App.Shared
 @using Microsoft.Extensions.Localization
 @using FoodDelivery.Web.App.Resources
+@using System.Security.Claims
 @inject IStringLocalizer<NavMenuComponentResources> PageLocalizer
 
 <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -35,7 +36,7 @@
                 </li>
                 <li class="nav-item">
                     <NavLink href="/sales" Match="NavLinkMatch.All"
-                            class="nav-link" ActiveClass="active">
+                             class="nav-link" ActiveClass="active">
                         @PageLocalizer["Sales"]
                     </NavLink>
                 </li>
@@ -49,6 +50,16 @@
                     <NavLink href="/shoppingCart" Match="NavLinkMatch.All"
                              class="nav-link" ActiveClass="active">
                         @PageLocalizer["ShoppingCart"]
+                    </NavLink>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <NavLink href="/login" Match="NavLinkMatch.All"
+                             class="nav-link" ActiveClass="active">
+                        @PageLocalizer["Login"]
                     </NavLink>
                 </li>
             </ul>

@@ -111,12 +111,24 @@ namespace FoodDelivery.Api.DAL.EF.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -140,6 +152,9 @@ namespace FoodDelivery.Api.DAL.EF.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("PhoneNumberToClosePerson")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -484,8 +499,8 @@ namespace FoodDelivery.Api.DAL.EF.Migrations
                         {
                             Id = new Guid("39ec26de-182e-4678-8c24-7c448be05a36"),
                             Address = "1234 Main st. China town",
-                            CreatedDate = new DateTime(2023, 2, 10, 11, 50, 39, 453, DateTimeKind.Local).AddTicks(4669),
-                            DeliveryTime = new DateTime(2023, 2, 10, 11, 50, 39, 455, DateTimeKind.Local).AddTicks(4695),
+                            CreatedDate = new DateTime(2023, 2, 11, 8, 23, 58, 892, DateTimeKind.Local).AddTicks(2864),
+                            DeliveryTime = new DateTime(2023, 2, 11, 8, 23, 58, 894, DateTimeKind.Local).AddTicks(2751),
                             Description = "ASAP please, I'm hungry",
                             Name = "Marek Klofera",
                             OrderState = 1,
@@ -495,8 +510,8 @@ namespace FoodDelivery.Api.DAL.EF.Migrations
                         {
                             Id = new Guid("7573e0e4-7da0-4aa9-860b-395610bd0eab"),
                             Address = "1234 Main st. Metrix",
-                            CreatedDate = new DateTime(2023, 2, 10, 11, 50, 39, 456, DateTimeKind.Local).AddTicks(621),
-                            DeliveryTime = new DateTime(2023, 2, 10, 11, 50, 39, 456, DateTimeKind.Local).AddTicks(637),
+                            CreatedDate = new DateTime(2023, 2, 11, 8, 23, 58, 894, DateTimeKind.Local).AddTicks(8551),
+                            DeliveryTime = new DateTime(2023, 2, 11, 8, 23, 58, 894, DateTimeKind.Local).AddTicks(8565),
                             Description = "Metrix is cool",
                             Name = "Mr. Anderson",
                             OrderState = 2,

@@ -44,4 +44,9 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Auth\" />
+    <Folder Include="Models\User\" />
+  </ItemGroup>
+
 </Project>

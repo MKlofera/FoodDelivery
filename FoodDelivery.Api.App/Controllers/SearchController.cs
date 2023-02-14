@@ -1,11 +1,13 @@
 ﻿using FoodDelivery.Api.BL.Facades.Interfaces;
 using FoodDelivery.Common.Models.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodDelivery.Api.App.Controllers;
 
 
 [ApiController]
+[Authorize]
 [Route("api/search")]
 public class SearchController : ControllerBase
 {

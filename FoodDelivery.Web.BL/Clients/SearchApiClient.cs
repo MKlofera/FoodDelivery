@@ -2,8 +2,9 @@
 
 public partial class SearchApiClient
 {
-    public SearchApiClient(HttpClient httpClient, string baseUrl) : this(baseUrl, httpClient)
+    public SearchApiClient(AuthenticatedHttpClient authenticatedHttpClient)
     {
-        BaseUrl = baseUrl;
+        _httpClient = authenticatedHttpClient.HttpClient;
+        _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings);
     }
 }

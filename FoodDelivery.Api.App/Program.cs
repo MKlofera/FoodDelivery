@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-
+using System.Text;
 using AutoMapper;
 using AutoMapper.Internal;
 
@@ -39,15 +39,23 @@ builder.Services.AddInstaller<ApiBLInstaller>();
 builder.Services.AddAutoMapper(typeof(EntityBase), typeof(ApiBLInstaller));
 builder.Services.AddControllers();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
-        options =>
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+    {
+        string? jwtSymmetricKey = builder.Configuration["JWT_SymmetricKey"];
+        var key = Encoding.ASCII.GetBytes(jwtSymmetricKey
+                                          ?? throw new ArgumentException("Symmetric key for JWT is missing"));
+
+        options.RequireHttpsMetadata = true;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters()
         {
-            options.Authority = builder.Configuration["IdentityServerUrl"];
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateAudience = false
-            };
-        });
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+
+        };
+    });
 
 var app = builder.Build();
 

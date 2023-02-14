@@ -37,10 +37,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodDelivery.Web.DAL", "Foo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodDelivery.Web.App", "FoodDelivery.Web.App\FoodDelivery.Web.App.csproj", "{ED61769B-AB4A-4A83-9859-C93DFC8ED3D9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{AFC2F41C-2487-4DBF-8D86-2380C240FAF9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodDelivery.Identity", "FoodDelivery.Identity\FoodDelivery.Identity.csproj", "{92CBBA22-ED18-4B09-8C2A-F75B14F924F0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,10 +91,6 @@ Global
 		{ED61769B-AB4A-4A83-9859-C93DFC8ED3D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED61769B-AB4A-4A83-9859-C93DFC8ED3D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED61769B-AB4A-4A83-9859-C93DFC8ED3D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{92CBBA22-ED18-4B09-8C2A-F75B14F924F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{92CBBA22-ED18-4B09-8C2A-F75B14F924F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{92CBBA22-ED18-4B09-8C2A-F75B14F924F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{92CBBA22-ED18-4B09-8C2A-F75B14F924F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,7 +110,6 @@ Global
 		{65705CD3-0CD7-452E-AECF-9DED715DB311} = {A1B47F5B-E43F-48DD-8545-30F41E49245D}
 		{84E2FF3D-0C3B-480F-9372-C3FFF91E3D83} = {A1B47F5B-E43F-48DD-8545-30F41E49245D}
 		{ED61769B-AB4A-4A83-9859-C93DFC8ED3D9} = {A1B47F5B-E43F-48DD-8545-30F41E49245D}
-		{92CBBA22-ED18-4B09-8C2A-F75B14F924F0} = {AFC2F41C-2487-4DBF-8D86-2380C240FAF9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1FC380A0-F2BD-4FA0-A947-FEDF71885B3D}

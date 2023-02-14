@@ -1,11 +1,13 @@
 ﻿using FoodDelivery.Api.BL.Facades.Interfaces;
 using FoodDelivery.Common.Models.Models.Order;
 using FoodDelivery.Common.Models.Models.Restaurant;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodDelivery.Api.App.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/orders/")]
 public class OrderController : ControllerBase
 {
