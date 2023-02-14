@@ -1,0 +1,27 @@
+﻿@page "/login"
+@namespace FoodDelivery.Web.App.Pages
+@using Microsoft.Extensions.Localization
+@using FoodDelivery.Web.App.Resources.Texts
+@inject IStringLocalizer<FoodEditPageResources> FoodEditPageLocalizer
+
+
+
+
+<form>
+    <!-- Email input -->
+    <div class="form-outline mb-4">
+        <input @bind="UserCredentials.Login" type="text" id="form2Example1" class="form-control" />
+        <label class="form-label" for="form2Example1">text address</label>
+    </div>
+
+    <!-- Password input -->
+    <div class="form-outline mb-4">
+        <input @bind="UserCredentials.Password" type="password" id="form2Example2" class="form-control" />
+        <label class="form-label" for="form2Example2">Password</label>
+    </div>
+
+    <!-- Submit button -->
+    <button @onclick="@GetToken" type="button" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+   
+</form>
