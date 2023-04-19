@@ -2,15 +2,14 @@ using FoodDelivery.Common;
 using FoodDelivery.Common.Models.Models;
 using FoodDelivery.Web.BL;
 using FoodDelivery.Web.BL.Facades;
-
 using Microsoft.AspNetCore.Components;
 
 namespace FoodDelivery.Web.App.Pages;
 
 public partial class SearchPage
 {
-    [Inject]
-    private SearchFacade SearchFacade { get; set; } = null!;
+    [Inject] private SearchFacade SearchFacade { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
 
     SearchResultsModel? searchResults;
     Task<SearchResultsModel>? searchTask;
@@ -28,7 +27,14 @@ public partial class SearchPage
             return;
         }
 
-        searchTask = SearchFacade.SearchAsync(searchQuery);
-        searchResults = await searchTask;
+        try
+        {
+            searchTask = SearchFacade.SearchAsync(searchQuery);
+            searchResults = await searchTask;
+        }
+        catch (Exception e)
+        {
+            NavigationManager.NavigateTo($"/login");
+        }
     }
 }

@@ -8,44 +8,48 @@ namespace FoodDelivery.Web.App.Pages;
 
 public partial class RestaurantEditPage
 {
-	[Inject]
-	private NavigationManager navigationManager { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
 
-	[Inject]
-	private RestaurantFacade RestaurantFacade { get; set; } = null!;
+    [Inject] private RestaurantFacade RestaurantFacade { get; set; } = null!;
 
-	private RestaurantDetailModel Data { get; set; } = new();
+    private RestaurantDetailModel Data { get; set; } = new();
 
-	[Parameter]
-	public Guid Id { get; set; }
+    [Parameter] public Guid Id { get; set; }
 
-	protected override async Task OnInitializedAsync()
-	{
-		if (Id != Guid.Empty)
-		{
-			Data = await RestaurantFacade.GetByIdAsync(Id);
-		}
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != Guid.Empty)
+        {
+            try
+            {
+                Data = await RestaurantFacade.GetByIdAsync(Id);
+            }
+            catch (Exception e)
+            {
+                NavigationManager.NavigateTo($"/login");
+            }
+        }
 
-		await base.OnInitializedAsync();
-	}
+        await base.OnInitializedAsync();
+    }
 
-	public async Task Save()
-	{
-		if (Id != Guid.Empty)
-		{
-			await RestaurantFacade.SaveToApi(Data);
-		}
-		else
-		{
-			await RestaurantFacade.InsertRestaurantAsync(Data);
-		}
+    public async Task Save()
+    {
+        if (Id != Guid.Empty)
+        {
+            await RestaurantFacade.SaveToApi(Data);
+        }
+        else
+        {
+            await RestaurantFacade.InsertRestaurantAsync(Data);
+        }
 
-		navigationManager.NavigateTo($"/restaurants");
-	}
+        NavigationManager.NavigateTo($"/restaurants");
+    }
 
-	public async Task Delete()
-	{
-		await RestaurantFacade.DeleteAsync(Id);
-		navigationManager.NavigateTo($"/restaurants");
-	}
+    public async Task Delete()
+    {
+        await RestaurantFacade.DeleteAsync(Id);
+        NavigationManager.NavigateTo($"/restaurants");
+    }
 }

@@ -12,13 +12,21 @@ public partial class OrderDetailPage
     [Parameter] public Guid Id { get; set; }
 
     [Inject] private OrderFacade OrderFacade { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
 
     private OrderDetailModel Order { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
-        Order = await OrderFacade.GetByIdAsync(Id);
-        await base.OnInitializedAsync();
+        try
+        {
+            Order = await OrderFacade.GetByIdAsync(Id);
+            await base.OnInitializedAsync();
+        }
+        catch (Exception e)
+        {
+            NavigationManager.NavigateTo($"/login");
+        }
     }
 
     private decimal GetTotalPrice()
@@ -28,6 +36,7 @@ public partial class OrderDetailPage
         {
             totalPrice += orderNote.FoodPrice * orderNote.FoodQuantity;
         }
+
         return totalPrice;
     }
 }

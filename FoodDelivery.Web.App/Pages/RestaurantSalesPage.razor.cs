@@ -2,7 +2,6 @@ using FoodDelivery.Common;
 using FoodDelivery.Common.Models.Models.Restaurant;
 using FoodDelivery.Web.BL;
 using FoodDelivery.Web.BL.Facades;
-
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.QuickGrid;
 
@@ -11,6 +10,7 @@ namespace FoodDelivery.Web.App.Pages;
 public partial class RestaurantSalesPage
 {
     [Inject] private RestaurantFacade RestaurantFacade { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
 
     ICollection<RestaurantSalesModel>? sales;
 
@@ -19,7 +19,14 @@ public partial class RestaurantSalesPage
 
     protected override async Task OnInitializedAsync()
     {
-        sales = await RestaurantFacade.GetAllSalesAsync();
-        await base.OnInitializedAsync();
+        try
+        {
+            sales = await RestaurantFacade.GetAllSalesAsync();
+            await base.OnInitializedAsync();
+        }
+        catch (Exception e)
+        {
+            NavigationManager.NavigateTo($"/login");
+        }
     }
 }

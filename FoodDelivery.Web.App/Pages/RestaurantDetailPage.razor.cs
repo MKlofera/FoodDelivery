@@ -16,8 +16,8 @@ public partial class RestaurantDetailPage
 {
     [Parameter] public Guid Id { get; set; }
 
-    [Inject] 
-    private RestaurantFacade RestaurantFacade { get; set; } = null!;
+    [Inject] private RestaurantFacade RestaurantFacade { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
 
     private RestaurantDetailModel Restaurant { get; set; } = new();
     public ICollection<FoodListModel>? FoodList { get; set; } = new List<FoodListModel>();
@@ -26,10 +26,17 @@ public partial class RestaurantDetailPage
 
     protected override async Task OnInitializedAsync()
     {
-        Restaurant = await RestaurantFacade.GetByIdAsync(Id);
-        FoodList = await RestaurantFacade.GetFoodsAsync(Id);
-        OrderList = await RestaurantFacade.GetOrdersAsync(Id);
-        RestaurantSales = await RestaurantFacade.GetSalesAsync(Id);
-        await base.OnInitializedAsync();
+        try
+        {
+            Restaurant = await RestaurantFacade.GetByIdAsync(Id);
+            FoodList = await RestaurantFacade.GetFoodsAsync(Id);
+            OrderList = await RestaurantFacade.GetOrdersAsync(Id);
+            RestaurantSales = await RestaurantFacade.GetSalesAsync(Id);
+            await base.OnInitializedAsync();
+        }
+        catch (Exception e)
+        {
+            NavigationManager.NavigateTo($"/login");
+        }
     }
 }

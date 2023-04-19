@@ -5,23 +5,29 @@
 @inject IStringLocalizer<FoodEditPageResources> FoodEditPageLocalizer
 
 
-
-
 <form>
+    <h1>Login</h1>
+
+    <div style="border: 2px solid red" class="m-3 p-3">
+        <h2>testing user:</h2>
+        <h3><strong>login: </strong>username</h3>
+        <h3><strong>password: </strong>pass</h3>
+    </div>
+
     <!-- Email input -->
     <div class="form-outline mb-4">
-        <input @bind="UserCredentials.Login" type="text" id="form2Example1" class="form-control" />
+        <input @bind="UserCredentials.Login" type="text" id="form2Example1" class="form-control"/>
         <label class="form-label" for="form2Example1">text address</label>
     </div>
 
     <!-- Password input -->
     <div class="form-outline mb-4">
-        <input @bind="UserCredentials.Password" type="password" id="form2Example2" class="form-control" />
+        <input @bind="UserCredentials.Password" type="password" id="form2Example2" class="form-control"/>
         <label class="form-label" for="form2Example2">Password</label>
     </div>
 
     <!-- Submit button -->
     <button @onclick="@GetToken" type="button" class="btn btn-primary btn-block mb-4">Sign in</button>
 
-   
+
 </form>

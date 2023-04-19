@@ -10,11 +10,20 @@ public partial class RestaurantListPage
 {
     [Inject] private RestaurantFacade RestaurantFacade { get; set; } = null!;
 
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
+
     ICollection<RestaurantListModel>? restaurants;
 
     protected override async Task OnInitializedAsync()
     {
-        restaurants = await RestaurantFacade.GetAllAsync();
+        try
+        {
+            restaurants = await RestaurantFacade.GetAllAsync();
+        }
+        catch (Exception e)
+        {
+            NavigationManager.NavigateTo($"/login");
+        }
         await base.OnInitializedAsync();
     }
 }

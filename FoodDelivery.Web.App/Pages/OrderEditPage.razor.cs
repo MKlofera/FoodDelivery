@@ -11,8 +11,7 @@ public partial class OrderEditPage
 {
     [Parameter] public Guid Id { get; set; }
 
-    [Inject]
-    private NavigationManager navigationManager { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
 
     [Inject] private OrderFacade OrderFacade { get; set; } = null!;
 
@@ -20,21 +19,42 @@ public partial class OrderEditPage
 
     protected override async Task OnInitializedAsync()
     {
-        Data = await OrderFacade.GetByIdAsync(Id);
-        await base.OnInitializedAsync();
+        try
+        {
+            Data = await OrderFacade.GetByIdAsync(Id);
+            await base.OnInitializedAsync();
+        }
+        catch (Exception e)
+        {
+            NavigationManager.NavigateTo($"/login");
+        }
     }
 
     public async Task Save()
     {
-        if (Data.OrderState == OrderState.Delivered)
-            Data.DeliveryTime = DateTime.Now;
-        await OrderFacade.SaveToApi(Data);
-        navigationManager.NavigateTo($"/orders");
+        try
+        {
+            if (Data.OrderState == OrderState.Delivered)
+                Data.DeliveryTime = DateTime.Now;
+            await OrderFacade.SaveToApi(Data);
+            NavigationManager.NavigateTo($"/orders");
+        }
+        catch (Exception e)
+        {
+            NavigationManager.NavigateTo($"/login");
+        }
     }
 
     public async Task Delete()
     {
-        await OrderFacade.DeleteAsync(Id);
-        navigationManager.NavigateTo($"/orders");
+        try
+        {
+            await OrderFacade.DeleteAsync(Id);
+            NavigationManager.NavigateTo($"/orders");
+        }
+        catch (Exception e)
+        {
+            NavigationManager.NavigateTo($"/login");
+        }
     }
 }

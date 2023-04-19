@@ -12,7 +12,7 @@ namespace FoodDelivery.Web.App.Pages;
 public partial class FoodEditPage
 {
     [Inject]
-    private NavigationManager navigationManager { get; set; } = null!;
+    private NavigationManager NavigationManager { get; set; } = null!;
 
     [Inject]
     private RestaurantFacade RestaurantFacade { get; set; } = null!;
@@ -34,16 +34,21 @@ public partial class FoodEditPage
 
     protected override async Task OnInitializedAsync()
     {
-        if (Id != Guid.Empty)
+        try
         {
-            Data = await FoodFacade.GetByIdAsync(Id);
+            if (Id != Guid.Empty)
+            {
+                Data = await FoodFacade.GetByIdAsync(Id);
+            }
 
+            if (RestaurantId != Guid.Empty)
+            {
+                RestaurantData = await RestaurantFacade.GetByIdAsync(RestaurantId);
+            }
         }
-
-        if (RestaurantId != Guid.Empty)
+        catch (Exception e)
         {
-            RestaurantData = await RestaurantFacade.GetByIdAsync(RestaurantId);
-
+            NavigationManager.NavigateTo($"/login");
         }
 
         await base.OnInitializedAsync();
@@ -60,13 +65,13 @@ public partial class FoodEditPage
         {
             await FoodFacade.SaveToApiAsync(Data);
         }
-        navigationManager.NavigateTo($"/restaurants");
+        NavigationManager.NavigateTo($"/restaurants");
     }
 
     public async Task Delete()
     {
         await FoodFacade.DeleteAsync(Id);
-        navigationManager.NavigateTo($"/restaurants");
+        NavigationManager.NavigateTo($"/restaurants");
     }
 
     public void AddAllergen()

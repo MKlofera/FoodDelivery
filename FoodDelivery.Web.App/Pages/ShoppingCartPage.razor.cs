@@ -24,6 +24,7 @@ public partial class ShoppingCartPage
 
     protected override async Task OnInitializedAsync()
     {
+        
         CartItems = await localStorage.GetItemAsync<List<ShoppingCartItemModel>>("ShoppingCart");
         await base.OnInitializedAsync();
     }
@@ -80,12 +81,6 @@ public partial class ShoppingCartPage
         {
             FoodOrderNoteListModel foodOrderNote = new(Guid.NewGuid(), order.Note, order.FoodId, order.FoodName, order.FoodPrice, order.Quantity, NewOrder.Id);
             NewOrder.FoodOrderNotes.Add(foodOrderNote);
-            // // tohle je hnus
-            // for (int i = 0; i < order.Quantity; i++)
-            // {
-            //     // FoodOrderNoteListModel foodOrderNote = new(Guid.NewGuid(), order.Note, order.FoodId, order.FoodName, order.FoodPrice, order.Quantity, NewOrder.Id);
-            //     // NewOrder.FoodOrderNotes.Add(foodOrderNote);
-            // }
         }
         await OrderFacade.InsertOrdersAsync(NewOrder);
 
